@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,17 +20,17 @@ public class Main {
             System.out.println(response);
             connection.disconnect();
             URL url1 = new URL("https://reqres.in/api/users");
-            HttpURLConnection connection1 = (HttpURLConnection) url1.openConnection();
-            connection1.setRequestMethod("POST");
-            connection1.setRequestProperty("Content-Type", "application/json");
-            connection1.setDoOutput(true);
+            connection = (HttpURLConnection) url1.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
             String body = "{\n\"name\": \"Maks\",\n\"job\": \"student\"\n}";
-            BufferedOutputStream wr = new BufferedOutputStream(connection1.getOutputStream());
+            BufferedOutputStream wr = new BufferedOutputStream(connection.getOutputStream());
             wr.write(body.getBytes());
             wr.close();
-            BufferedReader in1 = new BufferedReader(new InputStreamReader(connection1.getInputStream(), "utf-8"));
-            response = in1.readLine();
-            in1.close();
+            in = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            response = in.readLine();
+            in.close();
             System.out.println(response);
         } catch (MalformedURLException e) {
             System.out.println("Bad request");
